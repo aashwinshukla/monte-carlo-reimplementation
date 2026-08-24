@@ -1,0 +1,121 @@
+============================================================
+  REGRESSION TO THE MEAN
+============================================================
+
+ORIGIN:
+  The term was coined by Francis Galton in 1885.
+  Galton was not just a biologist — he was a statistician,
+  explorer, and one of the most data-driven thinkers of his era.
+
+------------------------------------------------------------
+GALTON'S OBSERVATION
+------------------------------------------------------------
+
+Galton collected height data from parents and their adult children.
+His finding:
+
+  Two taller-than-average parents → child tends to be shorter than them
+  Two shorter-than-average parents → child tends to be taller than them
+
+This wasn't a guess. He had the data to back it up.
+He called it "regression toward mediocrity" — what we now call
+regression to the mean.
+
+The reason: extreme outcomes (very tall, very short) involve
+a combination of genetics AND luck (nutrition, environment, etc.).
+The next generation inherits the genes, but gets its own independent
+roll of the luck factors. On average, the luck evens out —
+pulling the result back toward the population average.
+
+------------------------------------------------------------
+THE FORMAL IDEA
+------------------------------------------------------------
+
+Following an extreme random event, the next random event
+is likely to be less extreme.
+
+This is not the universe "correcting" anything.
+It is simply the mathematics of probability:
+extreme values are rare by definition, so the next
+observation is statistically more likely to be closer to average.
+
+------------------------------------------------------------
+ROULETTE EXAMPLE
+------------------------------------------------------------
+
+You spin a fair roulette wheel 10 times and get 10 reds in a row.
+That is an extreme event. P(10 reds) = (1/2)^10 = 1/1024.
+
+Now consider the next 10 spins.
+
+  Gambler's Fallacy interpretation:
+    "I'll get more blacks than usual to even things out."
+    → WRONG. Each spin is independent. The wheel has no memory.
+
+  Regression to the Mean interpretation:
+    "It is likely I'll get fewer than 10 reds in the next 10 spins."
+    → CORRECT. Because 10/10 reds is extreme and unlikely to repeat.
+    The expected number is 5 reds.
+
+Now look at the combined 20 spins:
+  First 10  → 10 reds  (100%)
+  Next 10   → ~5 reds  (50%, expected)
+  Total     → ~15/20 = 75% reds
+
+The overall average is moving back toward 50%.
+NOT because the wheel compensated — but because extreme events
+are rare and unlikely to keep happening.
+
+------------------------------------------------------------
+REGRESSION TO THE MEAN vs GAMBLER'S FALLACY
+------------------------------------------------------------
+
+These two ideas are easy to confuse. Here's the distinction:
+
+  Gambler's Fallacy:
+    Claims the NEXT INDIVIDUAL EVENT is affected by the past.
+    "After 10 reds, the next spin is more likely to be black."
+    → False. Next spin is still 50/50.
+
+  Regression to the Mean:
+    Claims the AVERAGE OVER FUTURE EVENTS will move toward the mean.
+    "After 10 reds, the next 10 spins will probably average ~50% red."
+    → True. Because extreme streaks don't usually continue.
+
+One is about a single event. The other is about the distribution
+of future outcomes. They sound similar but are completely different.
+
+------------------------------------------------------------
+WHERE REGRESSION TO THE MEAN SHOWS UP
+------------------------------------------------------------
+
+Sports:
+  A player has an extraordinary season (lucky + skilled).
+  The next season they "regress" — people say they got worse,
+  but often they just returned to their true ability level.
+  Coaches get fired after a bad season following a great one —
+  the team would have improved naturally either way.
+
+Medicine:
+  Patients seek treatment when symptoms are at their WORST.
+  They often improve afterward — not necessarily because of
+  the treatment, but because extreme symptoms naturally subside.
+  This is why placebo-controlled trials are essential.
+
+Testing and Scores:
+  A student scores unusually high on one exam (lucky day).
+  Their next score will likely be lower — not because they
+  got worse, but because the first score was an outlier.
+
+------------------------------------------------------------
+THE KEY TAKEAWAY
+------------------------------------------------------------
+
+  Extreme events tend to be followed by less extreme events.
+  Not because the system is self-correcting —
+  but because extreme events are, by definition, unlikely to repeat.
+
+  The mean is not a target the system aims for.
+  It is simply the most probable outcome at any given moment.
+
+============================================================
