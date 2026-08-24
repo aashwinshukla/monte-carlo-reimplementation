@@ -1,0 +1,121 @@
+============================================================
+  GAMBLER'S FALLACY
+============================================================
+
+THE FAMOUS INCIDENT:
+
+  "On August 18, 1913, at the casino in Monte Carlo, black came up
+  a record twenty-six times in succession [in roulette]... There was
+  a near-panicky rush to bet on red, beginning around the time black
+  had come up a phenomenal fifteen times in a row."
+                                    — Huff and Geis, How to Take a Chance
+
+Everyone in that casino made the same mistake.
+They believed red was now "due" — that the universe owed them
+a correction. It does not.
+
+------------------------------------------------------------
+THE CORE MISTAKE
+------------------------------------------------------------
+
+People thought:
+  "Black has come up 25 times. Red MUST appear now to balance things out."
+
+The reality:
+
+  Probability of 26 consecutive blacks (from the start):
+    (1/2)^26 = 1 / 67,108,864   ← incredibly unlikely
+
+  Probability of black on the 26th spin, given the previous 25 were black:
+    1/2   ← exactly the same as always
+
+The roulette wheel has no memory.
+Each spin is completely independent of every spin before it.
+The wheel does not know it landed on black 25 times.
+It does not "owe" anyone a red.
+
+------------------------------------------------------------
+WHY THE FALLACY FEELS TRUE
+------------------------------------------------------------
+
+The Law of Large Numbers says that over millions of spins,
+red and black will appear roughly equally often.
+
+People misread this to mean:
+  "So if black is ahead right now, red must catch up soon."
+
+But that's not how it works. The law operates through
+DILUTION, not CORRECTION.
+
+  After 25 blacks in a row (25 blacks, 0 reds):
+  Ratio = 100% black
+
+  After 1,000 more spins (~500 red, ~500 black):
+  Total: ~525 black, ~500 red
+  Ratio ≈ 51.2% black — already converging toward 50%
+
+  After 100,000 more spins:
+  Ratio ≈ 50.02% black
+
+The early streak gets mathematically drowned out by the
+volume of future spins. It is never "paid back."
+
+------------------------------------------------------------
+INDEPENDENT EVENTS — THE KEY IDEA
+------------------------------------------------------------
+
+An event is independent if its outcome is not affected
+by any previous outcome.
+
+A fair coin flip is independent.
+A fair roulette spin is independent.
+A lottery draw is independent.
+
+For independent events:
+  P(heads | last 10 flips were heads) = P(heads) = 0.5
+
+The conditional probability is identical to the unconditional
+probability. History is irrelevant.
+
+------------------------------------------------------------
+WHERE PEOPLE ACTUALLY GO WRONG
+------------------------------------------------------------
+
+The fallacy is everywhere:
+
+  "I've lost 5 times in a row, I'm due for a win."
+  "This slot machine hasn't paid out in hours, it must be ready."
+  "The lottery numbers 1,2,3,4,5,6 never come up."
+    → They are exactly as likely as any other combination.
+
+All of these assume the system is trying to balance itself.
+It isn't. Random is random.
+
+------------------------------------------------------------
+THE ONE PLACE DEPENDENCE IS REAL
+------------------------------------------------------------
+
+If you draw cards from a deck WITHOUT replacement,
+then the events ARE dependent.
+
+  P(second card is an ace | first card was an ace) = 3/51
+  P(second card is an ace | first card was not an ace) = 4/51
+
+This is different because the sample space changed.
+The deck "remembers" — but only because a card was removed.
+
+A roulette wheel resets every spin. Nothing is removed.
+This is why casino games are designed the way they are.
+
+------------------------------------------------------------
+SUMMARY
+------------------------------------------------------------
+
+  Law of Large Numbers:   The fraction converges over time.
+  Gambler's Fallacy:      Assuming the short run must correct itself.
+  Reality:                Each spin is independent. History means nothing.
+
+  The casino always wins — not because of luck,
+  but because the math is on their side every single spin.
+
+============================================================
