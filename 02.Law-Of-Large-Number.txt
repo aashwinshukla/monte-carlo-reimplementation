@@ -1,0 +1,103 @@
+============================================================
+  LAW OF LARGE NUMBERS
+============================================================
+
+FORMAL DEFINITION:
+  In repeated independent tests with the same actual probability p
+  of a particular outcome in each test, the chance that the fraction
+  of times that outcome occurs differs from p converges to zero
+  as the number of trials goes to infinity.
+
+  In plain English:
+    The more times you repeat an experiment, the closer your
+    observed frequency gets to the true underlying probability.
+
+------------------------------------------------------------
+WHAT IT MEANS IN PRACTICE
+------------------------------------------------------------
+
+Flip a fair coin (p = 0.5 for heads).
+
+  After 10 flips  → you might see 70% heads. That's fine.
+  After 100 flips → you'll likely see something like 55-45.
+  After 10,000 flips → you'll be very close to 50-50.
+  After 1,000,000 flips → almost exactly 50-50.
+
+The LAW doesn't say short runs will be balanced.
+It says long runs WILL converge.
+
+------------------------------------------------------------
+TWO VERSIONS OF THE LAW
+------------------------------------------------------------
+
+Weak Law of Large Numbers:
+  For any small epsilon > 0, as n → ∞, the probability that the
+  sample mean differs from the true mean by more than epsilon
+  approaches 0. (Convergence in probability)
+
+Strong Law of Large Numbers:
+  The sample mean will almost surely converge to the true mean
+  as n → ∞. (Almost sure convergence — a stronger statement)
+
+  For this project, the weak law is all you need to think about.
+
+------------------------------------------------------------
+WHY THIS IS THE FOUNDATION OF MONTE CARLO
+------------------------------------------------------------
+
+Monte Carlo works BECAUSE of the Law of Large Numbers.
+
+When we estimate π by throwing random darts:
+  True probability of landing inside the circle = π/4
+  Observed fraction after enough darts → converges to π/4
+  So: 4 × (observed fraction) → converges to π
+
+The law guarantees that the simulation will eventually give
+the correct answer — if you run it long enough.
+
+------------------------------------------------------------
+RATE OF CONVERGENCE
+------------------------------------------------------------
+
+The Law tells us convergence happens, but not how fast.
+That's given by the error formula:
+
+  Error ≈ 1 / sqrt(N)
+
+  N = 100       → error ≈ 10%
+  N = 10,000    → error ≈ 1%
+  N = 1,000,000 → error ≈ 0.1%
+
+To halve the error, you need to quadruple the sample size.
+This is slow — but it works in ANY number of dimensions.
+
+------------------------------------------------------------
+GAMBLER'S FALLACY — WHAT THE LAW DOES NOT SAY
+------------------------------------------------------------
+
+Common wrong belief:
+  "I've flipped 10 heads in a row. The next flip is more
+   likely to be tails to even things out."
+
+This is the GAMBLER'S FALLACY — and it is completely wrong.
+
+The Law of Large Numbers does NOT say that outcomes must
+balance out in the short run. Each flip is independent.
+The coin has no memory. The probability of tails on the
+next flip is still exactly 0.5.
+
+What actually happens over the long run:
+  The 10-head streak gets "diluted" by the thousands of
+  future flips — it doesn't get "corrected."
+
+  Example:
+    After 10 flips  → 10 heads, 0 tails → 100% heads
+    After 1000 flips → say 510 heads, 490 tails → 51% heads
+    After 100000 flips → ~50003 heads → ~50.003% heads
+
+  The absolute difference (heads - tails) may actually GROW,
+  but the FRACTION converges to 0.5. That is the law.
+
+  (This will be explored further in the Gambler's Fallacy file.)
+
+============================================================
