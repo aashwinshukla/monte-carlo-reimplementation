@@ -1,0 +1,106 @@
+============================================================
+  HISTORY AND STORY OF MONTE CARLO SIMULATION
+============================================================
+
+------------------------------------------------------------
+WHERE THE NAME COMES FROM
+------------------------------------------------------------
+
+Monte Carlo is a district in Monaco, famous for its casinos.
+The method was named after it because of one simple reason:
+randomness. Roulette wheels, dice, card shuffles — a casino
+is a machine that generates random outcomes at scale.
+
+The name was coined around 1947 by Nicholas Metropolis,
+a physicist working at Los Alamos National Laboratory.
+It was a code name — the work was classified.
+
+------------------------------------------------------------
+THE ORIGIN STORY
+------------------------------------------------------------
+
+The year is 1945. World War II has just ended.
+The Manhattan Project scientists at Los Alamos are now
+working on the hydrogen bomb.
+
+Stanislaw Ulam, a Polish-American mathematician, is lying
+in bed recovering from an illness. To pass the time, he
+plays solitaire. He starts wondering: what is the probability
+of a solitaire game being winnable? The combinations are
+too complex to calculate by hand.
+
+His thought: why not just play it out randomly, many times,
+and count how often it wins?
+
+He brought this idea to John von Neumann, one of the greatest
+mathematicians of the 20th century. Von Neumann immediately
+saw the potential — not just for card games, but for the
+neutron diffusion problems they were trying to solve at Los Alamos.
+
+How far does a neutron travel before hitting another nucleus?
+The math is intractable. But you can simulate a neutron's
+random walk millions of times and just observe what happens.
+
+The method worked. Monte Carlo simulation was born.
+
+ENIAC — one of the first electronic computers — was used to
+run some of the earliest Monte Carlo calculations in 1948.
+
+------------------------------------------------------------
+WHERE MONTE CARLO IS USED TODAY
+------------------------------------------------------------
+
+Finance:
+  - Pricing options and derivatives
+  - Simulating portfolio risk (Value at Risk)
+  - Stress-testing banks against thousands of market scenarios
+
+Physics:
+  - Simulating particle collisions (used at CERN)
+  - Modeling radiation transport in medical imaging
+  - Quantum mechanics calculations
+
+Engineering:
+  - Reliability testing: "what is the probability this bridge fails?"
+  - Simulating manufacturing defects
+  - Aerospace trajectory planning
+
+AI and Machine Learning:
+  - Monte Carlo Tree Search — used in AlphaGo to evaluate moves
+  - Reinforcement learning policy estimation
+  - Bayesian inference
+
+Medicine:
+  - Radiation therapy planning (dose distribution)
+  - Drug trial outcome prediction
+  - Epidemiological modeling (disease spread)
+
+Climate Science:
+  - Simulating atmospheric uncertainty
+  - Projecting temperature ranges over decades
+
+------------------------------------------------------------
+WHEN TO USE MONTE CARLO
+------------------------------------------------------------
+
+Monte Carlo is the right tool when:
+
+  1. The problem has randomness or uncertainty built into it
+  2. The space of outcomes is too large to enumerate
+  3. The function is too complex to integrate analytically
+  4. You need a probability distribution, not just a single answer
+  5. You're in high dimensions (10+) where grid methods collapse
+
+Monte Carlo is NOT ideal when:
+  - The problem has a clean analytical solution (just use math)
+  - You need very high precision quickly (it converges slowly)
+  - Computational resources are extremely limited
+
+------------------------------------------------------------
+ONE LINE SUMMARY
+------------------------------------------------------------
+
+  Monte Carlo: when the math is too hard, let randomness
+  do the work — and do it enough times that the answer emerges.
+
+============================================================

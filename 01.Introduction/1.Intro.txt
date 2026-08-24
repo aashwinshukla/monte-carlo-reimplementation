@@ -1,0 +1,84 @@
+============================================================
+  INTRODUCTION TO MONTE CARLO SIMULATION
+============================================================
+
+To predict a stock price, every possible outcome must be considered.
+To simulate how a particle moves after a collision, every interaction
+matters. The space of outcomes is vast and continuous — you simply
+cannot enumerate all of it.
+
+This is where Monte Carlo Simulation offers an elegant idea:
+
+  "Don't enumerate everything. Instead, randomly sample possibilities,
+   compute the outcome for each sample, and average the results.
+   The Law of Large Numbers guarantees convergence."
+
+At 10 samples       → the result is noisy
+At 1,000 samples    → the result is close
+At 1,000,000 samples → the result is essentially exact
+
+------------------------------------------------------------
+WHAT MONTE CARLO ACTUALLY COMPUTES
+------------------------------------------------------------
+
+Monte Carlo computes an EXPECTED VALUE — the average outcome
+over a large number of random trials.
+
+------------------------------------------------------------
+WHY TRADITIONAL INTEGRATION FAILS
+------------------------------------------------------------
+
+Traditional grid-based integration breaks down when:
+  1. The space is too large (too many dimensions)
+  2. Probabilities are unknown or hard to define
+  3. The function itself is too complex to integrate analytically
+
+The core problem is the "Curse of Dimensionality":
+  Grid-based methods require points that grow EXPONENTIALLY
+  with the number of dimensions.
+
+  2 dimensions,  10 points each → 100 evaluations
+  10 dimensions, 10 points each → 10,000,000,000 evaluations
+  100 dimensions, 10 points each → more evaluations than atoms in the universe
+
+Monte Carlo breaks this curse entirely.
+The number of samples needed depends only on the desired accuracy —
+NOT on the number of dimensions.
+Whether you're working in 10 or 100 dimensions, the same number of
+samples gives you the same quality of answer.
+
+------------------------------------------------------------
+THE CLASSIC EXAMPLE — ESTIMATING π
+------------------------------------------------------------
+
+Imagine a square of side length 2 centered at the origin.
+Inside it sits a circle of radius 1.
+
+  Area of circle   = π × 1² = π
+  Area of square   = 2 × 2  = 4
+
+  → Area of circle / Area of square = π / 4
+
+Now throw darts randomly at the square.
+Count how many land inside the circle.
+
+  π ≈ 4 × (darts inside circle / total darts)
+
+The more darts you throw, the closer you get to the real π.
+This will be implemented step by step later in the project.
+
+------------------------------------------------------------
+KEY FORMULA TO REMEMBER
+------------------------------------------------------------
+
+  Error in the estimate = 1 / sqrt(total_samples)
+
+  This means:
+    - 100 samples   → error ≈ 0.1    (10%)
+    - 10,000 samples → error ≈ 0.01   (1%)
+    - 1,000,000 samples → error ≈ 0.001  (0.1%)
+
+  To cut the error in half, you need 4× as many samples.
+  Accuracy improves slowly — but it always improves.
+
+============================================================
