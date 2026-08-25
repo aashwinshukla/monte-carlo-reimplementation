@@ -49,8 +49,8 @@ static HWND                  g_hwnd       = nullptr;
 static WNDCLASSEXW           g_wc         = {};
 static bool                  g_running    = true;
 
-// RNG
-static std::mt19937 g_gen{ std::random_device{}() };
+// Simulator instance — owns the RNG, replaces bare g_gen
+static Simulator g_sim;
 
 // App state
 enum class AppState {
@@ -137,31 +137,32 @@ static LRESULT WINAPI WndProc(HWND hWnd, UINT msg,
 static void runChoice(int choice) {
     g_state = AppState::RUNNING;
 
-    static const int sizes[] = { 0, 10, 100, 1000, 10000, 100000, 1000000 };
-
     if (choice >= 2 && choice <= 7) {
-        g_result = runSimulation(g_gen, sizes[choice - 1]);
+        static const int sizes[] = { 0, 0, 10, 100, 1000, 10000, 100000, 1000000 };
+        g_result = g_sim.run(sizes[choice]);
         g_state  = AppState::RESULT;
         g_statusMsg = "Press R to run again  |  Esc to go back";
     }
     else if (choice == 8) {
-        // custom — trials already parsed into g_customBuf
         int n = atoi(g_customBuf);
         if (n <= 0) n = 1000;
-        g_result = runSimulation(g_gen, n);
+        g_result = g_sim.run(n);
         g_state  = AppState::RESULT;
         g_statusMsg = "Press R to run again  |  Esc to go back";
     }
     else if (choice == 1) {
-        // Experiment mode: run all 6 sizes
         g_experimentResults.clear();
-        RunResult (*fns[])(std::mt19937&) = {
-            test1, test2, test3, test4, test5, test6
+        RunResult (*fns[])(Simulator&) = {
+            [](Simulator &s){ return s.run10();   },
+            [](Simulator &s){ return s.run100();  },
+            [](Simulator &s){ return s.run1K();   },
+            [](Simulator &s){ return s.run10K();  },
+            [](Simulator &s){ return s.run100K(); },
+            [](Simulator &s){ return s.run1M();   },
         };
         for (auto fn : fns) {
-            RunResult r = fn(g_gen);
+            RunResult r = fn(g_sim);
             g_experimentResults.push_back(r.stats);
-            // keep last scatter for the plot
             g_result = r;
         }
         g_state = AppState::EXPERIMENT;

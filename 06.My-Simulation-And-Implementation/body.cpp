@@ -1,111 +1,92 @@
-// Monte Carlo PI Estimator
-// Starting with the pi estimate as discussed in Chapter 1.
+// Monte Carlo PI Estimator — terminal entry point
+// Instantiates Simulator and InputValidator, drives the menu loop.
 
 #include <iostream>
-#include <random>
 #include <limits>
 using namespace std;
 
 #include "validity-check.h"
 #include "tests.h"
 
-inline constexpr double PI = 3.14159265358979323846;
+// Runs one simulation, then loops on the run-again prompt.
+static void runWithRepeat(Simulator &sim, int trials) {
+    RunResult r = sim.run(trials);
+    cout << "\nTrials              : " << r.stats.trials
+         << "\nPoints inside circle: " << r.stats.inCircle
+         << "\nEstimated PI        : " << r.stats.estimatedPi
+         << "\nActual PI           : 3.14159265358979"
+         << "\nAbsolute Error      : " << r.stats.error
+         << "\nTheoretical Bound   : " << r.stats.theoreticalBound
+         << "\n";
 
-// Runs a test function then offers "Run again / Back" loop
-static void runWithRepeat(void (*testFn)(mt19937&), mt19937 &gen) {
-    testFn(gen);
     while (true) {
         cout << "\n1. Run again\n2. Back\n";
-        int input2;
-        cin >> input2;
-        int choice2 = check2(input2);
-        if (choice2 == 1) {
-            testFn(gen);
-        } else if (choice2 == 2) {
+        int input;
+        cin >> input;
+        if (InputValidator::checkRunAgain(input) == 1)
+            r = sim.run(trials);
+        else if (InputValidator::checkRunAgain(input) == 2)
             break;
-        }
-        // if -1 (invalid), loop re-prompts naturally
     }
 }
 
 int main() {
-    random_device rd;
-    mt19937 gen(rd());
+    Simulator sim;
 
     while (true) {
-        cout << "\n";
-        cout << "======= Monte Carlo PI Estimator =======\n";
-        cout << "1. Existing Tests (pre-defined run of all sizes)\n";
-        cout << "2. 10 Trials\n";
-        cout << "3. 100 Trials\n";
-        cout << "4. 1,000 Trials\n";
-        cout << "5. 10,000 Trials\n";
-        cout << "6. 100,000 Trials\n";
-        cout << "7. 1,000,000 Trials\n";
-        cout << "8. Custom Trials\n";
-        cout << "9. Exit\n";
-        cout << "\nEnter choice: ";
+        cout << "\n======= Monte Carlo PI Estimator =======\n"
+             << "1. Experiment Mode (all sizes)\n"
+             << "2. 10 Trials\n"
+             << "3. 100 Trials\n"
+             << "4. 1,000 Trials\n"
+             << "5. 10,000 Trials\n"
+             << "6. 100,000 Trials\n"
+             << "7. 1,000,000 Trials\n"
+             << "8. Custom Trials\n"
+             << "9. Exit\n"
+             << "\nEnter choice: ";
 
-        int input1;
-        cin >> input1;
-        int choice1 = check1(input1);
+        int input;
+        cin >> input;
+        int choice = InputValidator::checkMenu(input);
+        if (choice == -1) continue;
 
-        if (choice1 == -1) continue;
-
-        if (choice1 == 9) {
+        if (choice == 9) {
             cout << "Exiting.\n";
             break;
 
-        } else if (choice1 == 1) {
-            // Run all sizes back to back (Experiment Mode from Phase 5)
-            cout << "\n--- Running all test sizes ---\n";
-            test1(gen);
-            test2(gen);
-            test3(gen);
-            test4(gen);
-            test5(gen);
-            test6(gen);
+        } else if (choice == 1) {
+            cout << "\n--- Experiment Mode ---\n";
+            RunResult (*fns[])(Simulator&) = {
+                [](Simulator &s){ return s.run10();   },
+                [](Simulator &s){ return s.run100();  },
+                [](Simulator &s){ return s.run1K();   },
+                [](Simulator &s){ return s.run10K();  },
+                [](Simulator &s){ return s.run100K(); },
+                [](Simulator &s){ return s.run1M();   },
+            };
+            for (auto fn : fns) {
+                RunResult r = fn(sim);
+                cout << "Trials: " << r.stats.trials
+                     << "  PI: "   << r.stats.estimatedPi
+                     << "  Err: "  << r.stats.error << "\n";
+            }
 
-        } else if (choice1 == 2) {
-            runWithRepeat(test1, gen);
-
-        } else if (choice1 == 3) {
-            runWithRepeat(test2, gen);
-
-        } else if (choice1 == 4) {
-            runWithRepeat(test3, gen);
-
-        } else if (choice1 == 5) {
-            runWithRepeat(test4, gen);
-
-        } else if (choice1 == 6) {
-            runWithRepeat(test5, gen);
-
-        } else if (choice1 == 7) {
-            runWithRepeat(test6, gen);
-
-        } else if (choice1 == 8) {
+        } else if (choice == 8) {
             cout << "Enter number of trials: ";
-            int customTrials;
-            cin >> customTrials;
-            if (cin.fail() || customTrials <= 0) {
+            int custom;
+            cin >> custom;
+            if (cin.fail() || custom <= 0) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Invalid trial count.\n";
                 continue;
             }
-            testCustom(gen, customTrials);
-            while (true) {
-                cout << "\n1. Run again\n2. Back\n";
-                int input2;
-                cin >> input2;
-                int choice2 = check2(input2);
-                if (choice2 == 1) {
-                    testCustom(gen, customTrials);
-                } else if (choice2 == 2) {
-                    break;
-                }
-            }
+            runWithRepeat(sim, custom);
+
+        } else {
+            static const int sizes[] = { 0, 0, 10, 100, 1000, 10000, 100000, 1000000 };
+            runWithRepeat(sim, sizes[choice]);
         }
     }
 
