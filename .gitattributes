@@ -1,3 +1,10 @@
-# Tell GitHub Linguist to ignore these from language stats
+# Mark third-party vendored code as vendor (Linguist ignores it by default)
+# — without this, ImGui's huge cpp files get discounted as "vendor"
+# which makes our small Python files look proportionally large
+06.My-Simulation-And-Implementation/third_party/** linguist-vendored=false
+
+# Exclude Python files from language stats entirely
 *.py linguist-detectable=false
+
+# Mark txt files as documentation (not code)
 *.txt linguist-documentation=true
