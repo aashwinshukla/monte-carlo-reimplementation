@@ -1,0 +1,41 @@
+# ── Build output ────────────────────────────────────────────────────
+build/
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.pdb
+*.ilk
+*.exp
+
+# ── CMake generated ──────────────────────────────────────────────────
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# ── ImGui runtime state ──────────────────────────────────────────────
+imgui.ini
+
+# ── Python cache (from 02 and 04 Python files) ───────────────────────
+__pycache__/
+*.pyc
+*.pyo
+
+# ── OS junk ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editor ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

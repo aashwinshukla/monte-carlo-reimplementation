@@ -7,8 +7,8 @@ int check1(int &input1){
         cout << "Invalid input! Please enter a number." << endl;
         return -1;
     }
-    if (input1 >= 1 && input1 <= 8) return input1;
-    cout << "Enter valid input! (1-8)" << endl;
+    if (input1 >= 1 && input1 <= 9) return input1;
+    cout << "Enter valid input! (1-9)" << endl;
     return -1;
 }
 
