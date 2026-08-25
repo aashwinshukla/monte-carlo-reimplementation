@@ -7,44 +7,43 @@ WHERE THE NAME COMES FROM
 ------------------------------------------------------------
 
 Monte Carlo is a district in Monaco, famous for its casinos.
-The method was named after it because of one simple reason:
-randomness. Roulette wheels, dice, card shuffles — a casino
-is a machine that generates random outcomes at scale.
+The method was named after it for one reason: randomness.
+Roulette wheels, dice, card shuffles — a casino is essentially
+a machine that generates random outcomes at scale.
 
 The name was coined around 1947 by Nicholas Metropolis,
 a physicist working at Los Alamos National Laboratory.
-It was a code name — the work was classified.
+It was a code name — the work was classified at the time.
 
 ------------------------------------------------------------
 THE ORIGIN STORY
 ------------------------------------------------------------
 
-The year is 1945. World War II has just ended.
-The Manhattan Project scientists at Los Alamos are now
-working on the hydrogen bomb.
+The year is 1945. World War II has just ended. The Manhattan
+Project scientists at Los Alamos are now working on the
+hydrogen bomb.
 
-Stanislaw Ulam, a Polish-American mathematician, is lying
-in bed recovering from an illness. To pass the time, he
-plays solitaire. He starts wondering: what is the probability
-of a solitaire game being winnable? The combinations are
-too complex to calculate by hand.
+Stanislaw Ulam, a Polish-American mathematician, is recovering
+from an illness. To pass the time, he plays solitaire and begins
+wondering: what is the probability that a given solitaire layout
+is winnable? The combinatorial space is far too large to calculate
+by hand.
 
-His thought: why not just play it out randomly, many times,
-and count how often it wins?
+The insight was simple: instead of computing it analytically,
+play it out randomly many times and count how often it wins.
 
-He brought this idea to John von Neumann, one of the greatest
+Ulam brought this idea to John von Neumann, one of the foremost
 mathematicians of the 20th century. Von Neumann immediately
-saw the potential — not just for card games, but for the
-neutron diffusion problems they were trying to solve at Los Alamos.
+recognized the broader potential — not just for card games, but
+for the neutron diffusion problems the team was trying to solve.
 
-How far does a neutron travel before hitting another nucleus?
-The math is intractable. But you can simulate a neutron's
-random walk millions of times and just observe what happens.
+How far does a neutron travel before striking another nucleus?
+The mathematics is intractable. But simulating a neutron's random
+walk millions of times and observing the outcome distribution —
+that is tractable. The method worked.
 
-The method worked. Monte Carlo simulation was born.
-
-ENIAC — one of the first electronic computers — was used to
-run some of the earliest Monte Carlo calculations in 1948.
+ENIAC, one of the first electronic computers, was used to run
+some of the earliest Monte Carlo calculations in 1948.
 
 ------------------------------------------------------------
 WHERE MONTE CARLO IS USED TODAY
@@ -53,54 +52,56 @@ WHERE MONTE CARLO IS USED TODAY
 Finance:
   - Pricing options and derivatives
   - Simulating portfolio risk (Value at Risk)
-  - Stress-testing banks against thousands of market scenarios
+  - Stress-testing financial institutions against
+    thousands of market scenarios
 
 Physics:
   - Simulating particle collisions (used at CERN)
   - Modeling radiation transport in medical imaging
-  - Quantum mechanics calculations
+  - Quantum mechanical calculations
 
 Engineering:
-  - Reliability testing: "what is the probability this bridge fails?"
-  - Simulating manufacturing defects
-  - Aerospace trajectory planning
+  - Structural reliability: estimating the probability of failure
+  - Simulating manufacturing defects and tolerances
+  - Aerospace trajectory planning under uncertainty
 
 AI and Machine Learning:
   - Monte Carlo Tree Search — used in AlphaGo to evaluate moves
   - Reinforcement learning policy estimation
-  - Bayesian inference
+  - Bayesian inference and posterior sampling
 
 Medicine:
-  - Radiation therapy planning (dose distribution)
+  - Radiation therapy treatment planning
   - Drug trial outcome prediction
-  - Epidemiological modeling (disease spread)
+  - Epidemiological modeling of disease spread
 
 Climate Science:
   - Simulating atmospheric uncertainty
-  - Projecting temperature ranges over decades
+  - Projecting temperature distributions over decades
 
 ------------------------------------------------------------
-WHEN TO USE MONTE CARLO
+WHEN MONTE CARLO IS THE RIGHT TOOL
 ------------------------------------------------------------
 
-Monte Carlo is the right tool when:
+Monte Carlo is appropriate when:
 
-  1. The problem has randomness or uncertainty built into it
-  2. The space of outcomes is too large to enumerate
-  3. The function is too complex to integrate analytically
-  4. You need a probability distribution, not just a single answer
-  5. You're in high dimensions (10+) where grid methods collapse
+  1. The problem contains inherent randomness or uncertainty
+  2. The outcome space is too large to enumerate directly
+  3. The integrand is too complex for closed-form analysis
+  4. A probability distribution is needed, not just a point estimate
+  5. The problem is high-dimensional, where grid methods collapse
 
-Monte Carlo is NOT ideal when:
-  - The problem has a clean analytical solution (just use math)
-  - You need very high precision quickly (it converges slowly)
-  - Computational resources are extremely limited
+Monte Carlo is not well-suited when:
+  - A clean analytical solution exists
+  - Very high precision is needed quickly (convergence is slow)
+  - Computational resources are severely constrained
 
 ------------------------------------------------------------
 ONE LINE SUMMARY
 ------------------------------------------------------------
 
   Monte Carlo: when the math is too hard, let randomness
-  do the work — and do it enough times that the answer emerges.
+  do the work — and repeat it enough times that the
+  answer emerges from the noise.
 
 ============================================================

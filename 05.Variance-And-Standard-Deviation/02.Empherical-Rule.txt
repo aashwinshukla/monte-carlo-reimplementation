@@ -1,140 +1,155 @@
 ============================================================
-  THE EMPIRICAL RULE — CONFIDENCE INTERVALS
+  THE EMPIRICAL RULE AND CONFIDENCE INTERVALS
 ============================================================
 
-So far we can compute a mean and a standard deviation.
-But when we report a simulation result, a single number
-isn't enough. We need to say how confident we are in it.
-
-That's what confidence intervals are for.
+Computing a mean and standard deviation describes the data
+that has been observed. The more important question in
+simulation is how well that observed data characterizes
+an unknown true value. Confidence intervals are the
+formal answer to that question.
 
 ------------------------------------------------------------
 CONFIDENCE INTERVALS
 ------------------------------------------------------------
 
-Instead of estimating an unknown parameter by a single value
-(e.g. the mean of a set of trials), a confidence interval
-provides a range that is likely to contain the true value,
-along with a confidence level that it actually does.
+Rather than estimating an unknown parameter with a single value,
+a confidence interval provides a range that is likely to contain
+the true value, paired with a confidence level specifying how
+often such intervals actually do contain it.
 
   Example:
-    "The return of betting a pocket 10,000 times in European
-     Roulette is -3.3%, with a margin of error of ±3.5%
-     at a 95% confidence level."
+    "The return of betting a single pocket 10,000 times in
+     European Roulette is −3.3%, with a margin of error of
+     ±3.5% at a 95% confidence level."
 
-  What this means:
-    If you ran an infinite number of trials of 10,000 bets each:
-      - Your expected average return would be -3.3%
-      - Your return would fall between -6.8% and +0.2%
-        approximately 95% of the time
+  Interpretation:
+    If this experiment were repeated an infinite number of times,
+    each time computing this interval from 10,000 spins:
+      - The average return across all experiments would be −3.3%
+      - Approximately 95% of the computed intervals would contain
+        the true expected return
 
-  What it does NOT mean:
-    It does NOT mean there is a 95% probability the true value
-    is in that specific interval. The true value is fixed —
-    either it's in the interval or it isn't. The 95% refers
-    to the procedure: if you repeated this many times, 95% of
-    the intervals you compute would contain the true value.
+  A common misreading:
+    A 95% confidence interval does NOT mean there is a 95%
+    probability that the true value lies within this specific
+    interval. The true value is fixed — it either falls inside
+    or it does not. The 95% refers to the reliability of the
+    procedure over repeated application, not to the probability
+    of any single interval.
 
 ------------------------------------------------------------
-THE EMPIRICAL RULE (68-95-99.7 Rule)
+THE EMPIRICAL RULE (68 — 95 — 99.7)
 ------------------------------------------------------------
 
-Under the assumption that data follows a normal distribution
-(discussed more in the next file):
+Under the assumption that the data follows a normal distribution:
 
-  68%  of data falls within  1    standard deviation of the mean
-  95%  of data falls within  1.96 standard deviations of the mean
-  99.7% of data falls within 3    standard deviations of the mean
+  68%   of observations fall within 1    standard deviation of the mean
+  95%   of observations fall within 1.96 standard deviations of the mean
+  99.7% of observations fall within 3    standard deviations of the mean
 
-  Visually:
+  Illustrated:
 
   |←—— 68% ——→|
   |←———— 95% ————→|
-  |←———————99.7%———————→|
-  
-  ... —3σ —— —2σ —— —1σ —— μ —— +1σ —— +2σ —— +3σ ...
+  |←——————— 99.7% ———————→|
 
-The 95% level (1.96 σ) is the one used most in practice.
-When someone says "margin of error" in statistics or news,
-they almost always mean a 95% confidence interval.
+  ... −3σ —— −2σ —— −1σ —— μ —— +1σ —— +2σ —— +3σ ...
+
+The 95% band (1.96σ) is the standard in applied statistics.
+When a poll or study reports a "margin of error," it is almost
+universally referring to a 95% confidence interval.
 
 ------------------------------------------------------------
-THE FORMULA
+THE CONFIDENCE INTERVAL FORMULA
 ------------------------------------------------------------
 
-For a set of N simulation trials with mean μ and
-standard deviation σ, the 95% confidence interval is:
+For N simulation trials producing a mean μ and standard
+deviation σ, the 95% confidence interval is:
 
   CI = μ ± 1.96 × (σ / sqrt(N))
 
-The term (σ / sqrt(N)) is called the STANDARD ERROR.
-It is the standard deviation of the sample mean itself —
-it measures how much the mean would vary across repeated
-experiments.
+The quantity σ / sqrt(N) is the STANDARD ERROR — the standard
+deviation of the sample mean across hypothetical repeated
+experiments. It measures not how spread out the raw data is,
+but how much the computed mean itself would vary if the
+experiment were run again.
 
   Standard Error = σ / sqrt(N)
 
-  As N increases → standard error shrinks → interval narrows
-  → you become more confident in your estimate
+As N increases:
+  → Standard error decreases
+  → Confidence interval narrows
+  → Estimate becomes more precise
 
 ------------------------------------------------------------
-WHY sqrt(N) AND NOT N?
+WHY sqrt(N) AND NOT N
 ------------------------------------------------------------
 
-If you average N independent measurements, the variance
-of the average is σ²/N (variances add for independent variables,
-and averaging divides variance by N).
+When N independent measurements are averaged, variance
+divides by N due to the additive property of variance:
 
-  Var(mean) = σ² / N
-  SD(mean)  = σ / sqrt(N)   ← standard error
+  Var(mean of N values) = σ² / N
 
-This is why doubling precision requires 4× the samples.
-To cut the interval in half, you need 4× the data.
+Taking the square root to obtain standard deviation:
+
+  SD(mean) = σ / sqrt(N)   ← this is the standard error
+
+This derivation explains why precision scales with the square
+root of sample size rather than linearly. To halve the
+confidence interval, the sample size must be quadrupled.
+To reduce it by a factor of 10, the sample size must increase
+by a factor of 100.
 
 ------------------------------------------------------------
-APPLYING THIS TO ROULETTE
+APPLICATION TO THE ROULETTE SIMULATION
 ------------------------------------------------------------
 
-This is exactly what will be implemented in the next file.
+The roulette simulation in the next file applies this
+framework directly. The procedure is:
 
-For the roulette simulation, the plan is:
-  1. Run the roulette game for numSpins, repeat for numTrials
-  2. Collect the return from each trial
-  3. Compute the mean return across all trials
-  4. Compute the standard deviation of those returns
+  1. Run the game for numSpins, record the mean return per spin
+  2. Repeat for numTrials independent trials
+  3. Compute the mean of the trial returns
+  4. Compute the standard deviation of the trial returns
   5. Compute the 95% confidence interval:
        mean ± 1.96 × (std / sqrt(numTrials))
-  6. Print: "Mean return = X%, 95% CI: [lower, upper]"
+  6. Report: mean return and the interval bounds
 
-Expected behavior:
-  - At low numSpins (100)     → wide confidence interval
-  - At high numSpins (1,000,000) → very tight confidence interval
-  - European/American wheels will have their CI centered
-    around the true house edge (-2.7% and -5.26%)
+The expected behavior across spin counts:
+  - At numSpins = 1,000     → wide interval, noisy estimate
+  - At numSpins = 1,000,000 → narrow interval, precise estimate
+  - European/American wheels should have their intervals
+    centered near the true house edge (−2.70% and −5.26%)
+
+This structure directly tests whether the empirical rule
+holds in practice for this class of simulation.
 
 ------------------------------------------------------------
 THE ASSUMPTION — NORMAL DISTRIBUTION
 ------------------------------------------------------------
 
-The empirical rule only applies when the data is
-approximately normally distributed (bell-shaped).
+The empirical rule is valid only when the data is
+approximately normally distributed.
 
-For roulette simulations this holds because of the
-CENTRAL LIMIT THEOREM:
-  Even if individual spin outcomes are not normally distributed,
-  the MEAN of a large number of those outcomes will be.
+For roulette simulations, this condition is satisfied
+through the CENTRAL LIMIT THEOREM:
 
-As long as numSpins is large enough (generally >30 is fine,
->1000 is very reliable), you can safely apply the empirical
-rule to the distribution of trial means.
+  Even when individual spin outcomes are not normally
+  distributed (each spin is a binary win/loss), the mean
+  of a sufficiently large number of such outcomes will
+  follow a normal distribution.
+
+In practice, numSpins greater than 30 is generally sufficient
+for the approximation to hold. At numSpins = 1,000 or more,
+the normal approximation is very reliable.
 
 ------------------------------------------------------------
 QUICK REFERENCE
 ------------------------------------------------------------
 
-  Standard Deviation (σ)  — spread of raw data
-  Standard Error (SE)     — spread of the sample mean = σ/sqrt(N)
-  Confidence Interval     — mean ± 1.96 × SE  (for 95%)
-  Margin of Error         — the ± part = 1.96 × SE
+  Standard Deviation (σ) — spread of individual observations
+  Standard Error (SE)    — spread of the sample mean = σ / sqrt(N)
+  Confidence Interval    — mean ± 1.96 × SE  (95% level)
+  Margin of Error        — the ± term = 1.96 × SE
 
 ============================================================

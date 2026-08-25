@@ -4,118 +4,145 @@
 
 ORIGIN:
   The term was coined by Francis Galton in 1885.
-  Galton was not just a biologist — he was a statistician,
-  explorer, and one of the most data-driven thinkers of his era.
+  Galton was a statistician, explorer, and one of the most
+  empirically rigorous thinkers of the 19th century.
+  His work on heredity and measurement laid foundational
+  groundwork for modern statistics.
 
 ------------------------------------------------------------
 GALTON'S OBSERVATION
 ------------------------------------------------------------
 
-Galton collected height data from parents and their adult children.
-His finding:
+Galton collected height measurements from parents and their
+adult children across a large dataset. The pattern he observed
+was consistent and striking:
 
-  Two taller-than-average parents → child tends to be shorter than them
-  Two shorter-than-average parents → child tends to be taller than them
+  Two taller-than-average parents → child tends to be
+    shorter than the parents (though still above average)
 
-This wasn't a guess. He had the data to back it up.
-He called it "regression toward mediocrity" — what we now call
-regression to the mean.
+  Two shorter-than-average parents → child tends to be
+    taller than the parents (though still below average)
 
-The reason: extreme outcomes (very tall, very short) involve
-a combination of genetics AND luck (nutrition, environment, etc.).
-The next generation inherits the genes, but gets its own independent
-roll of the luck factors. On average, the luck evens out —
-pulling the result back toward the population average.
+This was not conjecture — it was a conclusion drawn directly
+from data. Galton called it "regression toward mediocrity,"
+a term that has since been softened to regression to the mean.
+
+The explanation lies in the structure of extreme outcomes.
+A very tall person is tall partly due to genetics, and partly
+due to favorable environmental and developmental factors —
+nutrition, health during growth, and so on. These secondary
+factors are essentially random. The next generation inherits
+the genetics but draws independently from the same pool of
+random environmental factors. On average, those factors cancel
+out, pulling the result back toward the population mean.
 
 ------------------------------------------------------------
-THE FORMAL IDEA
+THE FORMAL PRINCIPLE
 ------------------------------------------------------------
 
 Following an extreme random event, the next random event
-is likely to be less extreme.
+drawn from the same distribution is likely to be less extreme.
 
-This is not the universe "correcting" anything.
-It is simply the mathematics of probability:
-extreme values are rare by definition, so the next
-observation is statistically more likely to be closer to average.
+This is not the system correcting itself.
+It is a direct consequence of probability: extreme values are
+rare by definition, and the next observation is simply more
+likely to fall near the center of the distribution than at
+its tail.
 
 ------------------------------------------------------------
-ROULETTE EXAMPLE
+ROULETTE AS AN ILLUSTRATION
 ------------------------------------------------------------
 
-You spin a fair roulette wheel 10 times and get 10 reds in a row.
-That is an extreme event. P(10 reds) = (1/2)^10 = 1/1024.
+A fair roulette wheel is spun 10 times, producing 10 consecutive
+reds. This is an extreme outcome: P(10 reds) = (1/2)^10 = 1/1024.
 
-Now consider the next 10 spins.
+Two distinct interpretations arise for the next 10 spins:
 
   Gambler's Fallacy interpretation:
-    "I'll get more blacks than usual to even things out."
-    → WRONG. Each spin is independent. The wheel has no memory.
+    "The next 10 spins will yield more blacks than usual
+     to compensate."
+    This is incorrect. Each spin is independent.
+    The wheel carries no memory of the previous 10 outcomes.
 
   Regression to the Mean interpretation:
-    "It is likely I'll get fewer than 10 reds in the next 10 spins."
-    → CORRECT. Because 10/10 reds is extreme and unlikely to repeat.
-    The expected number is 5 reds.
+    "The next 10 spins are unlikely to also produce 10 reds,
+     since that is a rare outcome."
+    This is correct. The expected outcome for 10 fair spins
+    is 5 reds. The probability of again seeing exactly 10 is
+    only 1/1024.
 
-Now look at the combined 20 spins:
+Examining the combined 20-spin window:
   First 10  → 10 reds  (100%)
-  Next 10   → ~5 reds  (50%, expected)
-  Total     → ~15/20 = 75% reds
+  Next 10   → ~5 reds  (50%, expected value)
+  Combined  → ~15/20 = 75% red
 
-The overall average is moving back toward 50%.
-NOT because the wheel compensated — but because extreme events
-are rare and unlikely to keep happening.
+The overall proportion moves back toward 50% — not because
+the wheel compensated, but because the extreme outcome was
+a statistical outlier that was unlikely to repeat.
 
 ------------------------------------------------------------
 REGRESSION TO THE MEAN vs GAMBLER'S FALLACY
 ------------------------------------------------------------
 
-These two ideas are easy to confuse. Here's the distinction:
+These two concepts are frequently conflated. The distinction
+is precise and important:
 
   Gambler's Fallacy:
-    Claims the NEXT INDIVIDUAL EVENT is affected by the past.
+    Claims the next individual event is influenced by the past.
     "After 10 reds, the next spin is more likely to be black."
-    → False. Next spin is still 50/50.
+    → Incorrect. The next spin is 50/50 regardless.
 
   Regression to the Mean:
-    Claims the AVERAGE OVER FUTURE EVENTS will move toward the mean.
-    "After 10 reds, the next 10 spins will probably average ~50% red."
-    → True. Because extreme streaks don't usually continue.
+    Claims that the average over future events will return
+    toward the distribution mean.
+    "After 10 reds, the next 10 spins will probably average
+     closer to 50% red."
+    → Correct. Extreme streaks are statistically unlikely
+      to continue at the same rate.
 
-One is about a single event. The other is about the distribution
-of future outcomes. They sound similar but are completely different.
-
-------------------------------------------------------------
-WHERE REGRESSION TO THE MEAN SHOWS UP
-------------------------------------------------------------
-
-Sports:
-  A player has an extraordinary season (lucky + skilled).
-  The next season they "regress" — people say they got worse,
-  but often they just returned to their true ability level.
-  Coaches get fired after a bad season following a great one —
-  the team would have improved naturally either way.
-
-Medicine:
-  Patients seek treatment when symptoms are at their WORST.
-  They often improve afterward — not necessarily because of
-  the treatment, but because extreme symptoms naturally subside.
-  This is why placebo-controlled trials are essential.
-
-Testing and Scores:
-  A student scores unusually high on one exam (lucky day).
-  Their next score will likely be lower — not because they
-  got worse, but because the first score was an outlier.
+The former makes a claim about a single event.
+The latter makes a claim about a distribution of outcomes.
+They are not the same statement, and confusing them leads
+to systematically wrong reasoning.
 
 ------------------------------------------------------------
-THE KEY TAKEAWAY
+WHERE REGRESSION TO THE MEAN APPEARS
+------------------------------------------------------------
+
+Sports Performance:
+  A player posts an extraordinary season, outperforming
+  historical levels. The following season they "decline."
+  This is frequently attributed to reduced effort or skill,
+  when in many cases it is simply regression to the mean —
+  an unusually strong performance was partly luck, and luck
+  does not sustain itself indefinitely.
+
+Medical Trials:
+  Patients characteristically seek treatment at the point of
+  peak symptom severity. Many improve afterward — regardless
+  of whether the treatment is effective. Without a control
+  group, it is impossible to separate genuine treatment
+  effect from regression to the mean. This is precisely why
+  placebo-controlled randomized trials are the standard.
+
+Academic Testing:
+  A student scores exceptionally well on one examination —
+  a performance influenced partly by genuine ability and
+  partly by favorable conditions on that day. The subsequent
+  score is likely to be lower, not because ability declined,
+  but because the first score was an outlier.
+
+------------------------------------------------------------
+THE KEY PRINCIPLE
 ------------------------------------------------------------
 
   Extreme events tend to be followed by less extreme events.
   Not because the system is self-correcting —
-  but because extreme events are, by definition, unlikely to repeat.
+  but because, by the nature of probability distributions,
+  extreme outcomes are rare and unlikely to repeat.
 
-  The mean is not a target the system aims for.
-  It is simply the most probable outcome at any given moment.
+  The mean is not a target the system is drawn toward.
+  It is simply the most probable single outcome in any
+  given trial drawn from a symmetric distribution.
 
 ============================================================

@@ -8,59 +8,69 @@ FORMAL DEFINITION:
   of times that outcome occurs differs from p converges to zero
   as the number of trials goes to infinity.
 
-  In plain English:
-    The more times you repeat an experiment, the closer your
-    observed frequency gets to the true underlying probability.
+  Stated plainly: the more times an experiment is repeated,
+  the closer the observed frequency gets to the true
+  underlying probability.
 
 ------------------------------------------------------------
 WHAT IT MEANS IN PRACTICE
 ------------------------------------------------------------
 
-Flip a fair coin (p = 0.5 for heads).
+Consider a fair coin (p = 0.5 for heads).
 
-  After 10 flips      → you might see 70% heads. That's fine.
-  After 100 flips     → you'll likely see something like 55-45.
-  After 10,000 flips  → you'll be very close to 50-50.
-  After 1,000,000 flips → almost exactly 50-50.
+  After 10 flips        → 70% heads is entirely plausible
+  After 100 flips       → results tend toward 55-45
+  After 10,000 flips    → very close to 50-50
+  After 1,000,000 flips → essentially indistinguishable from 50-50
 
-The LAW doesn't say short runs will be balanced.
-It says long runs WILL converge.
+The law makes no claim about short runs being balanced.
+It asserts that long runs WILL converge.
 
 ------------------------------------------------------------
 TWO VERSIONS OF THE LAW
 ------------------------------------------------------------
 
 Weak Law of Large Numbers:
-  For any small epsilon > 0, as n → ∞, the probability that the
-  sample mean differs from the true mean by more than epsilon
-  approaches 0. (Convergence in probability)
+  For any small ε > 0, as n → ∞, the probability that the
+  sample mean differs from the true mean by more than ε
+  approaches 0.
+  This is convergence in probability.
 
 Strong Law of Large Numbers:
   The sample mean will almost surely converge to the true mean
-  as n → ∞. (Almost sure convergence — a stronger statement)
+  as n → ∞.
+  This is almost sure convergence — a strictly stronger statement.
 
-  For this project, the weak law is all you need to think about.
+For practical simulation purposes, the weak law captures
+everything that matters. The strong law is a theoretical
+refinement relevant to formal proofs.
 
 ------------------------------------------------------------
 WHY THIS IS THE FOUNDATION OF MONTE CARLO
 ------------------------------------------------------------
 
-Monte Carlo works BECAUSE of the Law of Large Numbers.
+Monte Carlo simulation is valid precisely because of the
+Law of Large Numbers.
 
-When we estimate π by throwing random darts:
-  True probability of landing inside the circle = π/4
-  Observed fraction after enough darts → converges to π/4
-  So: 4 × (observed fraction) → converges to π
+In the π estimation experiment:
+  The true probability of a random point landing inside
+  the quarter-circle is π/4.
 
-The law guarantees that the simulation will eventually give
-the correct answer — if you run it long enough.
+  By the Law of Large Numbers:
+    Observed fraction → converges to π/4 as N → ∞
+    Therefore: 4 × (observed fraction) → converges to π
+
+The law provides the theoretical guarantee that running
+more simulations will produce a more accurate result.
+Without it, Monte Carlo would have no mathematical foundation.
 
 ------------------------------------------------------------
 RATE OF CONVERGENCE
 ------------------------------------------------------------
 
-The Law tells us convergence happens, but not how fast.
-That's given by the error formula:
+The Law of Large Numbers guarantees convergence but says
+nothing about how fast it occurs. That is given separately
+by the standard error formula:
 
   Error ≈ 1 / sqrt(N)
 
@@ -68,36 +78,38 @@ That's given by the error formula:
   N = 10,000    → error ≈ 1%
   N = 1,000,000 → error ≈ 0.1%
 
-To halve the error, you need to quadruple the sample size.
-This is slow — but it works in ANY number of dimensions.
+Halving the error requires quadrupling the sample size.
+Convergence is slow — but crucially, it is independent
+of the dimensionality of the problem.
 
 ------------------------------------------------------------
-GAMBLER'S FALLACY — WHAT THE LAW DOES NOT SAY
+WHAT THE LAW DOES NOT SAY — THE GAMBLER'S FALLACY
 ------------------------------------------------------------
 
-Common wrong belief:
-  "I've flipped 10 heads in a row. The next flip is more
-   likely to be tails to even things out."
+A common misreading of this law produces what is known
+as the Gambler's Fallacy: the belief that after a streak of
+one outcome, the opposite outcome is now more likely to
+"balance things out."
 
-This is the GAMBLER'S FALLACY — and it is completely wrong.
+  "Ten heads in a row — tails is surely due now."
 
-The Law of Large Numbers does NOT say that outcomes must
-balance out in the short run. Each flip is independent.
-The coin has no memory. The probability of tails on the
-next flip is still exactly 0.5.
+This is incorrect. Each flip is independent. The coin has
+no memory of previous outcomes. The probability of tails
+on the next flip is still exactly 0.5.
 
-What actually happens over the long run:
-  The 10-head streak gets "diluted" by the thousands of
-  future flips — it doesn't get "corrected."
+What the law actually describes is dilution, not correction.
+The 10-head streak does not get paid back — it gets
+mathematically overwhelmed by the volume of future flips,
+and the fraction gradually converges toward 0.5.
 
-  Example:
-    After 10 flips    → 10 heads,    0 tails  → 100%    heads
-    After 1,000 flips → ~510 heads, 490 tails →  51%    heads
-    After 100,000 flips → ~50,003 heads       →  50.003% heads
+  After 10 flips      → 10 heads,     0 tails  → 100%    heads
+  After 1,000 flips   → ~510 heads, 490 tails  →  51%    heads
+  After 100,000 flips → ~50,003 heads           →  50.003% heads
 
-  The absolute difference (heads - tails) may actually GROW,
-  but the FRACTION converges to 0.5. That is the law.
+Notably, the absolute difference (heads minus tails) may
+actually grow over time — yet the fraction still converges.
+That distinction is the entire point.
 
-  (Explored in detail in the next file: 03.Gamblers-Fallacy.txt)
+  (Explored in full in the next file: 03.Gamblers-Fallacy.txt)
 
 ============================================================

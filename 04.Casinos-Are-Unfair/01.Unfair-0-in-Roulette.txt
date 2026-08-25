@@ -1,101 +1,112 @@
 ============================================================
-  HOW CASINOS MAKE ROULETTE UNFAIR — THE ZERO TRICK
+  HOW CASINOS MAKE ROULETTE UNFAIR — THE ZERO
 ============================================================
 
-A fair roulette wheel has 36 pockets: numbers 1 through 36,
-half red and half black. If that's all there was, the game
-would be perfectly fair — the casino earns nothing long-term.
+A fair roulette wheel contains 36 pockets: numbers 1 through 36,
+evenly divided between red and black. On such a wheel, the game
+is mathematically fair — the casino holds no long-term advantage.
 
-So casinos add zeros. That's the entire trick.
+Casinos solve this problem by adding zero pockets.
 
-  European Roulette → adds one zero  (0)   → 37 total pockets
-  American Roulette → adds two zeros (0,00) → 38 total pockets
+  European Roulette → one zero  (0)    → 37 total pockets
+  American Roulette → two zeros (0, 00) → 38 total pockets
+
+The payout structure remains unchanged. That asymmetry is the
+entire source of the house's edge.
 
 ------------------------------------------------------------
-HOW THE MATH CHANGES
+THE MATHEMATICS OF THE HOUSE EDGE
 ------------------------------------------------------------
 
-When you bet on a single number, the payout is always 35 to 1.
-That payout was designed for a 36-pocket wheel.
+A single-number bet pays 35 to 1 on every variant of the wheel.
+This payout was designed for 36 pockets — it is exactly fair
+on a 36-pocket wheel and becomes progressively worse for the
+player as pockets are added.
 
 On a FAIR wheel (36 pockets):
   P(win) = 1/36
-  Expected return = (35 × 1/36) + (-1 × 35/36)
-                  = 35/36 - 35/36 = 0%
-  The game is exactly fair. Neither side has an edge.
+  Expected return = (35 × 1/36) + (−1 × 35/36)
+                  = 35/36 − 35/36 = 0%
+  Neither side has an edge.
 
 On a EUROPEAN wheel (37 pockets):
   P(win) = 1/37
-  Expected return = (35 × 1/37) + (-1 × 36/37)
-                  = 35/37 - 36/37 = -1/37 ≈ -2.70%
-  The casino takes 2.70 cents of every dollar bet, on average.
+  Expected return = (35 × 1/37) + (−1 × 36/37)
+                  = 35/37 − 36/37 = −1/37 ≈ −2.70%
+  The casino extracts 2.70 cents per dollar wagered, on average.
 
 On an AMERICAN wheel (38 pockets):
   P(win) = 1/38
-  Expected return = (35 × 1/38) + (-1 × 37/38)
-                  = 35/38 - 37/38 = -2/38 ≈ -5.26%
-  The casino takes 5.26 cents of every dollar bet, on average.
+  Expected return = (35 × 1/38) + (−1 × 37/38)
+                  = 35/38 − 37/38 = −2/38 ≈ −5.26%
+  The casino extracts 5.26 cents per dollar wagered, on average.
 
-This percentage is called the HOUSE EDGE.
-
-------------------------------------------------------------
-WHAT THE SIMULATION CONFIRMS
-------------------------------------------------------------
-
-The code in 02.Change-in-code-UNFAIR.py runs 20 trials at
-increasing spin counts (1,000 → 10,000 → 100,000 → 1,000,000)
-for all three wheel types and prints the average expected return.
-
-Results (from the simulation):
-
-  Spins      Fair Roulette    European    American
-  -------------------------------------------------
-  1,000       +6.56%          -2.26%      -8.92%
-  10,000      -1.23%          -4.17%      -5.75%
-  100,000     +0.81%          -2.65%      -5.11%
-  1,000,000   -0.07%          -2.73%      -5.21%
-
-Notice what happens as spins increase:
-
-  Fair Roulette → converges to 0%       (no house edge)
-  European      → converges to -2.70%   (1/37 house edge)
-  American      → converges to -5.26%   (2/38 house edge)
-
-With only 1,000 spins there's a lot of noise — variance is high.
-By 1,000,000 spins the Law of Large Numbers has kicked in fully
-and the true house edge is clearly visible.
+This figure — the casino's average take per unit wagered — is
+called the HOUSE EDGE.
 
 ------------------------------------------------------------
-WHY YOU CANNOT BEAT THE CASINO
+SIMULATION RESULTS
 ------------------------------------------------------------
 
-Every betting system ever invented — Martingale, Fibonacci,
-D'Alembert, flat betting — all fail for the same reason:
+The simulation in 02.Change-in-code-UNFAIR.py runs 20 independent
+trials across increasing spin counts for all three wheel types,
+recording the average expected return at each scale.
 
-  They change WHEN you win and lose.
-  They cannot change the expected return per spin.
+  Spins        Fair Roulette    European    American
+  ---------------------------------------------------
+  1,000         +6.56%          −2.26%      −8.92%
+  10,000        −1.23%          −4.17%      −5.75%
+  100,000       +0.81%          −2.65%      −5.11%
+  1,000,000     −0.07%          −2.73%      −5.21%
 
-If every spin has a -2.70% expected return, then over N spins
-your total expected return is also -2.70%, no matter how you
-arrange your bets. The math is baked in at the wheel level.
+At 1,000 spins, variance is high and the results are noisy —
+the Fair Roulette return of +6.56% appears profitable, and the
+American wheel at −8.92% appears far worse than theory predicts.
+Neither observation is meaningful at this sample size.
 
-The only way to have a positive expected return at roulette
-is to use a biased wheel — one that physically lands on
-certain numbers more often. This does happen in practice
-(worn wheels, manufacturing defects), but casinos monitor
-for it carefully.
+By 1,000,000 spins, the Law of Large Numbers has fully asserted
+itself. The estimates converge tightly to their theoretical values:
+
+  Fair Roulette → 0%       (theoretical: 0%)
+  European      → −2.70%  (theoretical: −1/37 ≈ −2.703%)
+  American      → −5.26%  (theoretical: −2/38 ≈ −5.263%)
+
+The simulation is accurately recovering the analytically derived
+house edge values. This is Monte Carlo working exactly as intended.
 
 ------------------------------------------------------------
-THE ZERO IN PRACTICE
+WHY NO BETTING SYSTEM CAN OVERCOME THE HOUSE EDGE
 ------------------------------------------------------------
 
-When the ball lands on 0 (or 00):
-  - All outside bets (red/black, odd/even, high/low) LOSE.
-  - The casino collects everything.
-  - The zero pockets don't pay out at 35:1 unless you
-    specifically bet on them — which most players don't.
+Every betting system ever proposed — Martingale, Fibonacci,
+D'Alembert, flat betting — fails for the same fundamental reason:
 
-That single extra pocket, representing roughly 2.7% of the
-wheel, is where all of the casino's profit comes from.
+  Betting systems alter the sequence of wagers.
+  They do not alter the expected return per spin.
+
+If every spin carries an expected return of −2.70%, then over
+N spins the cumulative expected return is also −2.70%, regardless
+of how bets are sized or sequenced. The edge is not a function
+of bet size — it is a structural property of the wheel itself.
+
+The only scenario in which a player can achieve a positive
+expected return is a physically biased wheel — one that lands on
+certain numbers with above-average frequency due to mechanical
+wear or manufacturing imperfection. Casinos monitor wheel
+performance precisely to detect and eliminate this possibility.
+
+------------------------------------------------------------
+WHAT HAPPENS WHEN THE BALL LANDS ON ZERO
+------------------------------------------------------------
+
+When the outcome is 0 or 00:
+  - All outside bets (red/black, odd/even, 1-18/19-36) lose.
+  - The casino collects the full stake on every such bet.
+  - The zero pockets pay 35:1 only if directly bet upon,
+    which the majority of players never do.
+
+That single additional pocket — approximately 2.7% of the
+wheel in the European variant — accounts for the entirety of
+the casino's mathematical advantage in roulette.
 
 ============================================================

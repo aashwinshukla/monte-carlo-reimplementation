@@ -3,22 +3,23 @@
   Variance and Standard Deviation
 ============================================================
 
-When we run a Monte Carlo simulation, we don't just want
-the average result — we want to know how much the results
-vary. Two simulations can have the same mean but wildly
-different spreads. Variance and standard deviation measure
-that spread.
+A simulation result reported as a single number — a mean — is
+incomplete. Two simulations can produce identical means while
+differing dramatically in how much their individual results
+scatter around that mean. Variance and standard deviation are
+the tools used to measure and communicate that scatter.
 
 ------------------------------------------------------------
-MEAN (QUICK RECAP)
+MEAN
 ------------------------------------------------------------
 
   Mean (μ) = sum of all values / number of values
 
   Example: [2, 4, 4, 4, 5, 5, 7, 9]
-  Mean = (2+4+4+4+5+5+7+9) / 8 = 40 / 8 = 5
+  μ = (2+4+4+4+5+5+7+9) / 8 = 40 / 8 = 5
 
-  The mean tells you the center. It says nothing about spread.
+The mean identifies the center of a distribution.
+It carries no information about how spread out the data is.
 
 ------------------------------------------------------------
 VARIANCE
@@ -27,124 +28,130 @@ VARIANCE
 Variance measures the average squared distance of each
 data point from the mean.
 
-  Variance (σ²) = (1/N) × Σ (xᵢ - μ)²
+  Variance (σ²) = (1/N) × Σ (xᵢ − μ)²
 
-  For the example above (mean = 5):
-    Deviations:    -3, -1, -1, -1, 0, 0, 2, 4
-    Squared:        9,  1,  1,  1, 0, 0, 4, 16
-    Sum of squares: 32
+  For the example above (μ = 5):
+    Deviations:      −3, −1, −1, −1,  0,  0,  2,  4
+    Squared:          9,  1,  1,  1,  0,  0,  4, 16
+    Sum of squares:  32
     Variance = 32 / 8 = 4
 
 ------------------------------------------------------------
-WHY SQUARE THE DEVIATIONS?
+WHY DEVIATIONS ARE SQUARED
 ------------------------------------------------------------
 
-Your instinct is right to question this — why not just use
-the absolute value of (xᵢ - μ)?
+The natural question is why deviations are squared rather than
+simply taking the absolute value — both approaches yield
+positive numbers representing distance from the mean.
 
-  Option 1 — Absolute deviation:  |xᵢ - μ|
-  Option 2 — Squared deviation:   (xᵢ - μ)²
+The choice of squaring over absolute value is justified on
+three grounds:
 
-Both give positive numbers. Both measure distance from the mean.
-So why do we square?
+  1. MATHEMATICAL TRACTABILITY
+     The squared function is smooth and differentiable at
+     every point, including zero. The absolute value function
+     has a non-differentiable corner at zero, which prevents
+     the use of calculus-based optimization and complicates
+     formal proofs. Squaring makes the mathematics tractable.
 
-Three reasons:
-
-  1. MATHEMATICAL CONVENIENCE
-     Squared functions are smooth and differentiable everywhere.
-     Absolute value has a sharp corner at zero — calculus breaks
-     there. Squaring makes the math tractable for proofs,
-     optimization, and the normal distribution derivation.
-
-  2. PENALIZING OUTLIERS MORE HEAVILY
-     Squaring amplifies large deviations more than small ones.
-     A point 10 units away contributes 100 to variance.
+  2. OUTLIER SENSITIVITY
+     Squaring disproportionately amplifies large deviations.
+     A point 10 units from the mean contributes 100 to variance.
      A point 1 unit away contributes only 1.
-     This is actually a feature — it makes variance sensitive
-     to extreme values, which is often what you care about.
+     This is not a flaw — it is a deliberate property that
+     makes variance sensitive to extreme values, which are
+     often the most consequential observations in a dataset.
 
-  3. VARIANCE ADDS CLEANLY
-     Var(X + Y) = Var(X) + Var(Y)  (for independent X, Y)
-     This additive property does not hold for mean absolute deviation.
-     It's what makes variance useful in probability theory.
+  3. ADDITIVE DECOMPOSITION
+     For independent random variables X and Y:
+       Var(X + Y) = Var(X) + Var(Y)
+     This additive property does not hold for mean absolute
+     deviation. It is what makes variance compositionally
+     useful across probability theory and statistics.
 
-  The tradeoff: variance is in squared units, which is why we
-  take the square root to get standard deviation.
+The cost of squaring is that variance exists in squared units,
+rendering it dimensionally uninterpretable in isolation. This
+is resolved by taking the square root.
 
 ------------------------------------------------------------
 STANDARD DEVIATION
 ------------------------------------------------------------
 
-  Standard Deviation (σ) = sqrt(Variance) = sqrt(σ²)
+  Standard Deviation (σ) = sqrt(Variance)
 
   From the example: σ = sqrt(4) = 2
 
-Standard deviation is just variance brought back to the
-original units of the data. If your data is in dollars,
-variance is in dollars-squared (meaningless), but standard
-deviation is in dollars (interpretable).
+Standard deviation restores the measurement to the original
+units of the data. If the data is denominated in dollars,
+variance is in dollars-squared — a unit without direct meaning.
+Standard deviation returns the measurement to dollars, making
+it directly comparable to the mean.
 
 ------------------------------------------------------------
 THE OUTLIER EFFECT
 ------------------------------------------------------------
 
-Because deviations are squared, outliers have a
-disproportionately large effect on variance.
+Because deviations are squared, a single extreme value can
+dominate variance entirely.
 
-  Dataset A: [4, 5, 5, 5, 5, 5, 5, 6]   → mean = 5, σ ≈ 0.5
-  Dataset B: [4, 5, 5, 5, 5, 5, 5, 50]  → mean ≈ 10.5, σ ≈ 15.1
+  Dataset A: [4, 5, 5, 5, 5, 5, 5, 6]   → μ = 5,   σ ≈ 0.5
+  Dataset B: [4, 5, 5, 5, 5, 5, 5, 50]  → μ ≈ 10.5, σ ≈ 15.1
 
-One extreme value completely dominates the variance in B.
-This is important in simulations — a few extreme outcomes
-can inflate variance and make your confidence intervals
-much wider than they would otherwise be.
+One outlier in Dataset B has increased the standard deviation
+by a factor of roughly 30. In the context of Monte Carlo
+simulation, a small number of extreme trial outcomes can
+inflate variance substantially, producing confidence intervals
+far wider than the central tendency of results would suggest.
 
 ------------------------------------------------------------
 STANDARD DEVIATION RELATIVE TO THE MEAN
 ------------------------------------------------------------
 
-Standard deviation alone means nothing without context.
-A σ of 10 is huge if the mean is 5, but tiny if the mean is 10,000.
+Standard deviation is only interpretable in relation to
+the scale of the mean. A standard deviation of 10 is large
+when the mean is 5, but negligible when the mean is 10,000.
 
-This is why we use the COEFFICIENT OF VARIATION (CV):
+This relative measure is formalized as the
+COEFFICIENT OF VARIATION (CV):
 
-  CV = σ / μ   (expressed as a percentage)
+  CV = σ / μ   (typically expressed as a percentage)
 
   Example:
-    Mean = 100, σ = 10  → CV = 10%  (low variation)
-    Mean = 5,   σ = 10  → CV = 200% (very high variation)
+    μ = 100, σ = 10  → CV = 10%  (low relative variation)
+    μ = 5,   σ = 10  → CV = 200% (very high relative variation)
 
-In Monte Carlo, always look at standard deviation relative
-to your mean estimate. A simulation result of π ≈ 3.14 with
-σ = 0.001 is very tight. The same result with σ = 0.3 is not.
+In Monte Carlo, a simulation estimate of π ≈ 3.14 with σ = 0.001
+represents a tight, reliable result. The same estimate with
+σ = 0.3 indicates the simulation has not yet converged.
 
 ------------------------------------------------------------
 SAMPLE VARIANCE vs POPULATION VARIANCE
 ------------------------------------------------------------
 
-Population variance (when you have ALL data):
-  σ² = (1/N) × Σ (xᵢ - μ)²
+Population variance — used when the full dataset is available:
+  σ² = (1/N) × Σ (xᵢ − μ)²
 
-Sample variance (when you have a SUBSET of data):
-  s² = (1/(N-1)) × Σ (xᵢ - x̄)²
+Sample variance — used when working with a subset of data:
+  s² = (1/(N−1)) × Σ (xᵢ − x̄)²
 
-The (N-1) denominator is called Bessel's correction.
-It corrects for the fact that a sample mean is slightly
-closer to the sample data than the true population mean is —
-which would otherwise cause variance to be underestimated.
+The (N−1) denominator is Bessel's correction. It compensates
+for the fact that the sample mean is systematically closer
+to the sample data than the true population mean is — which
+would otherwise cause variance to be consistently underestimated.
 
-In Monte Carlo simulations, you're almost always working
-with samples, so use (N-1) in practice.
+Monte Carlo simulations operate on samples, so sample variance
+with (N−1) is the appropriate measure in practice.
 
 ------------------------------------------------------------
-PUTTING IT TOGETHER
+SUMMARY
 ------------------------------------------------------------
 
-  Mean             → WHERE the data is centered
-  Variance         → HOW MUCH the data is spread (squared units)
-  Standard Deviation → HOW MUCH the data is spread (original units)
-  CV               → HOW MUCH spread relative to the mean
+  Mean               → where the data is centered
+  Variance           → how much the data is spread (squared units)
+  Standard Deviation → how much the data is spread (original units)
+  Coefficient of Variation → spread relative to the mean
 
-  All four together give you a complete picture of a dataset.
+  These four quantities together provide a complete
+  characterization of a dataset's central tendency and dispersion.
 
 ============================================================
