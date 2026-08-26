@@ -1,0 +1,107 @@
+============================================================
+  RANDOM WALK
+============================================================
+
+A random walk is a mathematical model based on Brownian motion —
+the erratic, unpredictable movement of a particle suspended in
+a fluid, first formally described by Robert Brown in 1827 and
+given a mathematical foundation by Einstein in 1905.
+
+The core idea: at each step, the particle moves in a direction
+determined purely by chance. No memory of previous steps.
+No preference for any direction. Pure randomness.
+
+------------------------------------------------------------
+WHY RANDOM WALKS MATTER
+------------------------------------------------------------
+
+Random walks appear across a surprising range of domains:
+
+  Finance:
+    Stock prices are often modelled as random walks. Each day's
+    price movement is treated as a random step from the previous
+    price. This is the foundation of the Efficient Market Hypothesis
+    — if all information is already priced in, future movements
+    are essentially random.
+
+  Physics:
+    Diffusion of particles in a gas or liquid. How far does a
+    molecule travel from its origin over time? The answer follows
+    directly from random walk mathematics.
+
+  Biology:
+    Movement of bacteria searching for food (chemotaxis).
+    Foraging patterns of animals in the wild.
+
+  Computer Science:
+    Randomised algorithms, network routing, PageRank (Google's
+    original algorithm) is built on random walks across a graph.
+
+------------------------------------------------------------
+THE CENTRAL QUESTION
+------------------------------------------------------------
+
+Given a particle taking N random steps, how far from the origin
+does it end up?
+
+Intuition might say: since every step is equally likely in any
+direction, the particle should stay near the origin. Steps in
+one direction get cancelled out by steps in the opposite direction.
+
+This intuition is partially right but misses something important.
+The expected distance from the origin after N steps is not 0 —
+it grows with N. Specifically:
+
+  Expected distance ≈ √N
+
+After 100 steps  → expected distance ≈ 10
+After 10,000 steps → expected distance ≈ 100
+
+The particle drifts. Not in any particular direction, but away
+from the origin. This is a direct consequence of the same
+mathematics behind the standard error formula from Chapter 05.
+
+------------------------------------------------------------
+THE SIMULATION
+------------------------------------------------------------
+
+The simulation constrains movement to four cardinal directions:
+
+  NORTH → (x, y+1)
+  SOUTH → (x, y-1)
+  EAST  → (x+1, y)
+  WEST  → (x-1, y)
+
+At each step, one of these four directions is chosen with equal
+probability (1/4 each). The particle's position is updated and
+the path is recorded.
+
+Running this thousands of times and averaging the final distances
+gives an experimental estimate of the expected distance — which
+should converge to √N as the number of trials increases.
+
+This is Monte Carlo applied to geometry: instead of computing
+E[distance] analytically, simulate the walk many times and
+let the Law of Large Numbers produce the answer.
+
+------------------------------------------------------------
+WHAT TO LOOK FOR IN THE RESULTS
+------------------------------------------------------------
+
+  Single walk visualisation:
+    The path will look chaotic. No discernible pattern.
+    But the particle will almost certainly end up away from
+    the origin — rarely does it return to (0,0).
+
+  Average distance across many walks:
+    This should converge to approximately √N.
+    The more walks simulated, the tighter the estimate.
+
+  Maximum distance:
+    The furthest the particle travelled during the walk.
+    Gives a sense of the range of possible outcomes.
+
+  This is the pattern hidden inside randomness —
+  not a direction, but a rate of drift.
+
+============================================================
