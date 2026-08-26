@@ -1,12 +1,14 @@
 #include <iostream>
 #include <limit>
 #include <random>
-
+#include "validity-check.h"
+#include "test.h"
 using namespace std;
 
 int main(){
     int input1
     
+
     while(true){
         cout << endl;
         cout << "Random Walk Simulation" << endl;
@@ -20,5 +22,13 @@ int main(){
         
         cin >> input1; 
         int choose1 = check1(input1);
+
+        if (choose1 == 6){
+            break;
+        }else if(choose1 == 1){
+            while(true){
+                test1();
+            }
+        }
     }
 }
