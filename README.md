@@ -1,83 +1,130 @@
 # Monte Carlo Simulation — C++
 
-A from-scratch Monte Carlo simulator built in C++, starting with the classic π estimation problem and expanding into probability theory, statistical analysis, and graphical visualisation.
+A from-scratch Monte Carlo simulator built in C++, covering probability theory, statistical analysis, and graphical visualisation. Two simulations implemented so far: PI estimation and Random Walk.
 
 ---
 
 ## What is Monte Carlo Simulation?
 
-Monte Carlo simulation is a method of estimating unknown values by running large numbers of random experiments and observing what the results converge to. The core guarantee is the **Law of Large Numbers** — the more trials you run, the closer your observed frequency gets to the true probability.
+Monte Carlo simulation estimates unknown values by running large numbers of random experiments and observing what the results converge to. The core guarantee is the **Law of Large Numbers** — the more trials you run, the closer your observed frequency gets to the true probability.
 
-The name comes from the Monte Carlo casino in Monaco. The method was developed in the 1940s by Stanislaw Ulam and John von Neumann at Los Alamos while working on neutron diffusion problems — problems too complex to solve analytically but tractable through random sampling.
+The name comes from the Monte Carlo casino in Monaco. The method was developed in the 1940s by Stanislaw Ulam and John von Neumann at Los Alamos while working on neutron diffusion problems too complex to solve analytically but tractable through random sampling.
 
 ---
 
-## PI Estimation
+## Simulation 1 — PI Estimation
 
-The first simulation estimates π using random geometry.
-
-A unit square contains a quarter-circle of radius 1. If points are thrown uniformly at random inside the square, the fraction that land inside the quarter-circle converges to π/4.
+A unit square contains a quarter-circle of radius 1. Points thrown uniformly at random inside the square land inside the quarter-circle with probability π/4.
 
 ```
 π ≈ 4 × (points inside circle / total points)
 ```
 
-The condition for a point (x, y) to be inside the circle:
-
+Condition for a point (x, y) to be inside:
 ```
 x² + y² ≤ 1
 ```
 
-The error in the estimate follows:
-
+Error in the estimate:
 ```
 Error ≈ 1 / √N
 ```
 
-So accuracy improves with more trials — slowly, but guaranteed.
+**Features:**
+- 6 pre-defined sizes — 10 to 1,000,000 trials
+- Custom trial count
+- Experiment mode — all sizes back to back with comparison table
+- Scatter plot — green inside, red outside, cyan arc overlay
 
 ---
 
-## Features
+## Simulation 2 — Random Walk
 
-- **6 pre-defined simulation sizes** — 10 to 1,000,000 trials
-- **Custom trial count** — run any number of trials
-- **Experiment mode** — runs all sizes back to back and compares results in a table
-- **Graphical UI** — built with Dear ImGui + DirectX 9, opens in its own window
-- **Scatter plot** — visualises every sampled point, colour-coded inside (green) vs outside (red) with the quarter-circle arc overlaid in cyan
-- **Results panel** — shows estimated π, actual π, absolute error, theoretical error bound, and an error progress bar
-- **OOP architecture** — `Simulator` class owns the RNG and simulation logic, `InputValidator` handles input, clean separation of concerns
+A particle starts at the origin (0, 0). At each step it moves North, South, East, or West with equal probability (1/4 each). The key question: how far from the origin does it end up after N steps?
+
+Intuition says the steps should cancel out and the particle should stay near the origin. The actual result is more interesting — the expected distance grows with the square root of steps:
+
+```
+Expected distance ≈ √N
+```
+
+After 100 steps   → expected distance ≈ 10  
+After 10,000 steps → expected distance ≈ 100
+
+This is Monte Carlo applied to geometry: instead of computing the expected distance analytically, simulate thousands of walks and let the Law of Large Numbers produce the answer.
+
+**Features:**
+- Choose particle count: 1, 5, 10, 100, or custom
+- Choose step count: 100, 1K, 10K, 100K, or custom
+- Per-particle path visualisation — colour-fading line from start (green) to end (red)
+- Aggregate stats: avg final distance, avg max distance, theoretical √N
+- Arrow through each particle's path individually in the UI
+
+---
+
+## Graphical UI
+
+Built with **Dear ImGui + DirectX 9 + Win32** — opens in its own window, no console behind it.
+
+Two tabs in a single window:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Monte Carlo Simulator                                  │
+├──────────────────────────────────────────────────────── │
+│  [ PI Estimator ]  [ Random Walk ]                      │
+├──────────────┬───────────────────────┬──────────────────┤
+│  MENU        │  CANVAS               │  RESULTS         │
+│              │  (ImDrawList)         │                  │
+└──────────────┴───────────────────────┴──────────────────┘
+```
+
+Controls: click buttons or use arrow keys + Enter to navigate, R to repeat last run, Esc to go back.
 
 ---
 
 ## Project Structure
 
 ```
-01.Introduction/                  — What Monte Carlo is and why it works
-02.Monte-Carlo-Roulette/          — Roulette simulation, Law of Large Numbers, Gambler's Fallacy
-03.Regression-To-The-Mean/        — Galton's observation and statistical regression
-04.Casinos-Are-Unfair/            — How the house edge works mathematically
-05.Variance-And-Standard-Deviation/ — Quantifying uncertainty, empirical rule, confidence intervals
-06.My-Simulation-And-Implementation/ — C++ implementation with ImGui UI
+01.Introduction/                    — What Monte Carlo is and why it works
+02.Monte-Carlo-Roulette/            — Roulette sim, Law of Large Numbers, Gambler's Fallacy
+03.Regression-To-The-Mean/          — Galton's observation and statistical regression
+04.Casinos-Are-Unfair/              — How the house edge works mathematically
+05.Variance-And-Standard-Deviation/ — Variance, SD, empirical rule, confidence intervals
+06.My-Simulation-And-Implementation/— PI estimator C++ + ImGui UI (main window)
+07.Random-Walk-Understanding/       — Theory notes on random walks and Brownian motion
+08.My-Random-Walk/                  — Random walk C++ implementation
 ```
 
 ---
 
-## Build
+## Build — UI (folder 06)
 
 Requires: `g++`, `CMake`, `mingw32-make`, DirectX 9 (ships with Windows)
 
 ```bash
+cd 06.My-Simulation-And-Implementation
 mkdir build
 cd build
-cmake .. -G "MinGW Makefiles"
-mingw32-make -j4
+cmake .. -G "MinGW Makefiles" -DCMAKE_MAKE_PROGRAM="C:/MinGW/bin/mingw32-make.exe"
+"C:/MinGW/bin/mingw32-make.exe" -j4
 .\monte-carlo-pi.exe
+```
+
+## Build — Terminal only (folder 08)
+
+```bash
+cd 08.My-Random-Walk
+mkdir build
+cd build
+cmake .. -G "MinGW Makefiles" -DCMAKE_MAKE_PROGRAM="C:/MinGW/bin/mingw32-make.exe"
+"C:/MinGW/bin/mingw32-make.exe" -j4
+.\random-walk.exe
 ```
 
 ---
 
-## Sample Output
+## Sample Output — PI
 
 | Trials    | Estimated π   | Error      |
 |-----------|---------------|------------|
@@ -88,19 +135,36 @@ mingw32-make -j4
 | 100,000   | 3.142680000   | 0.001087   |
 | 1,000,000 | 3.141596000   | 0.000004   |
 
-As trials increase, the estimate converges to the true value of π = 3.14159265...
+## Sample Output — Random Walk (10 particles, 1000 steps)
+
+| Particle | Final Dist | Max Dist |
+|----------|------------|----------|
+| 1        | 18.4       | 31.2     |
+| 2        | 12.7       | 28.6     |
+| 3        | 34.1       | 41.8     |
+| ...      | ...        | ...      |
+| Avg      | ~22.4      | ~33.1    |
+| √1000    | 31.6       | —        |
+
+---
+
+## Architecture
+
+- `Simulator` class — owns RNG, runs PI simulations, returns `RunResult`
+- `Walker` class — one particle, tracks position and path
+- `WalkSimulation` class — owns RNG, runs N walkers for S steps, returns `SimulationStats`
+- `InputValidator` class — static validation methods for all menus
 
 ---
 
 ## What's Next
 
-- **Random Walk simulation** — a particle moving randomly in 2D, tracking path, distance statistics, and visualising the walk as a drawn path in the UI
-- **Dice probability simulator** — experimental vs theoretical probability comparison
+- **Dice probability simulator** — experimental vs theoretical probability comparison (sum of two dice across millions of rolls)
 
 ---
 
 ## References
 
-- Guttag, J. — *Introduction to Computation and Programming Using Python* (MIT OCW lecture series)
+- Guttag, J. — *Introduction to Computation and Programming Using Python* (MIT OCW)
 - Huff, D. & Geis, I. — *How to Take a Chance*
 - Ulam, S. — *Adventures of a Mathematician*
